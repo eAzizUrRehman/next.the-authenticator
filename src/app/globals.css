@@ -112,4 +112,36 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  ::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #e5e7eb80;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #00000033;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: #e5e7eb80;
+    border-radius: 10px;
+    border: none;
+  }
+
+  button {
+    @apply outline-none;
+  }
+
+  a {
+    @apply outline-none;
+  }
 }

@@ -25,18 +25,24 @@ const HeaderComponent = () => {
   };
 
   return (
-    <header className="mb-5 flex min-h-[68px] items-center justify-between rounded-xl border border-gray-500 px-5 py-1">
+    <header className="mb-5 flex min-h-[68px] flex-col-reverse items-center justify-between gap-y-2 rounded-xl border border-gray-500 px-5 py-1 sm:flex-row">
       <NavigationMenuComponent />
       <div className="flex items-center space-x-5">
         <ThemeSwitcher />
         <button className="h-fit w-fit overflow-hidden rounded-full">
-          <Image
-            src="/icons/github-icon.svg"
-            alt="github icon"
-            className=""
-            width={32}
-            height={32}
-          />
+          <a
+            href="https://github.com/eAzizUrRehman/next.the-authenticator"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src="/icons/github-icon.svg"
+              alt="github icon"
+              className=""
+              width={32}
+              height={32}
+            />
+          </a>
         </button>
         {pathname !== '/signin' && pathname !== '/signup' && (
           <Button className="" onClick={signOutUser}>

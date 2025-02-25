@@ -13,6 +13,7 @@ const headers: Header[] = [
   { id: '4', name: 'Country' },
   { id: '5', name: 'City' },
   { id: '6', name: 'Zip' },
+  { id: '7', name: 'Action' },
 ];
 
 interface Customer {
