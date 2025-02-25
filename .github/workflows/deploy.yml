@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  # Update branches if required
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          key: ${{ secrets.ACTION_PRIVATE_SSH_KEY }}
+          script: ${{ secrets.SCRIPT_TO_RUN }}
