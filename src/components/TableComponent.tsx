@@ -39,9 +39,9 @@ const TableComponent: React.FC<TableComponentProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="relative size-full rounded-xl border border-gray-500 px-5 py-2">
+    <div className="relative size-full">
       <Table>
-        <TableCaption className="absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <TableCaption className="absolute -bottom-5 left-1/2 min-w-full -translate-x-1/2 -translate-y-1/2">
           {caption}
         </TableCaption>
         <TableHeader>
@@ -64,7 +64,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
                   <TableCell className="">{item?.country}</TableCell>
                   <TableCell className="">{item?.city}</TableCell>
                   <TableCell className="">{item?.zip}</TableCell>
-                  <TableCell className="flex justify-center">
+                  <TableCell className="flex items-center justify-center">
                     <button
                       className=""
                       onClick={() => onDelete(item._id as string)}

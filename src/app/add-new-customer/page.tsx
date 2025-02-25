@@ -80,8 +80,6 @@ export default function AddNewCustomerPage() {
     try {
       const response = await axios.post('/api/customer/add', data);
 
-      console.log(response, 'response }}}}}}}}}}}}}}}}}}}} ');
-
       if (response.status === 201) {
         toast('Success', {
           description: response.data.message || 'Customer added successfully.',
@@ -107,7 +105,7 @@ export default function AddNewCustomerPage() {
     <div className="flex h-full w-full items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[500px] space-y-5 rounded-xl border border-gray-500 p-10"
+        className="max-w-[500px] space-y-5 rounded-xl border border-gray-500 p-10"
       >
         {customerFields.map((item, index) => (
           <div

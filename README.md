@@ -1,4 +1,4 @@
-# Tasheer Digital Project: Multi-Step Form with Dashboard
+# The Authenticator: An Auth & Multi-Step Form with Dashboard Project
 
 Build a multi-step form that allows users to register, submit their details, and view/edit their submissions on a dashboard.
 

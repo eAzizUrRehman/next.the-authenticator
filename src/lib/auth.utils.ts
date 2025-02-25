@@ -30,7 +30,7 @@ export const extractUserFromJWTToken = async () => {
 
     return user;
   } catch (error) {
-    console.log('Error extracting user from JWT token:', error);
+    console.error('Error extracting user from JWT token:', error);
     return null;
   }
 };
@@ -51,7 +51,7 @@ export const generateAndSaveAccessAndRefreshTokens = async (
 
     return { accessToken, refreshToken };
   } catch (error) {
-    console.log(
+    console.error(
       'Error generating and saving access and refresh tokens:',
       error
     );

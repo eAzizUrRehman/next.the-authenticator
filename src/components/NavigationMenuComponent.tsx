@@ -79,14 +79,6 @@ const NavigationMenuComponent: React.FC = () => {
             </NavigationMenuItem>
           </>
         )}
-
-        <NavigationMenuItem>
-          <Link href="/tech-stack-used" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Tech Stack Used
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
