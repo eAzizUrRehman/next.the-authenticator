@@ -53,7 +53,6 @@ const customerSchema: Schema<Customer> = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    required: [true, 'Profile picture is required'],
     trim: true,
     maxlength: [255, 'Profile picture must be less than 255 characters'],
   },

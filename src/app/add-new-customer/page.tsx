@@ -10,8 +10,8 @@ import { customerFields } from '@/fields/customer.field';
 import { useState } from 'react';
 import { customerSchema, TCustomerSchema } from '@/schemas/customer.schema';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { renewAccessToken } from '@/lib/jwt.utils';
+import Image from 'next/image';
 import axios from 'axios';
 
 export default function AddNewCustomerPage() {
@@ -54,36 +54,31 @@ export default function AddNewCustomerPage() {
       setProfileUrl(response.data.data.url);
 
       if (response.status !== 201) {
-        toast('Error', {
-          description:
-            'There was a problem uploading the file. Please try again.',
-        });
+        toast.error(
+          'There was a problem uploading the file. Please try again.'
+        );
       }
     } catch (e) {
       console.error(e);
-      toast('Error', {
-        description:
-          'There was a problem uploading the file. Please try again.',
-      });
+      toast.error('There was a problem uploading the file. Please try again.');
     } finally {
       setIsImageUploading(false);
     }
   };
 
   const onSubmit = async (data: TCustomerSchema) => {
-    const result = customerSchema.safeParse(data);
+    if (isSubmitting) return;
 
-    if (!result.success) return;
-
-    data.profilePicture = profileUrl;
+    if (profileUrl === '/images/profile.jpg') data.profilePicture = '';
+    else data.profilePicture = profileUrl;
 
     try {
       const response = await axios.post('/api/customer/add', data);
 
       if (response.status === 201) {
-        toast('Success', {
-          description: response.data.message || 'Customer added successfully.',
-        });
+        toast.success(
+          response?.data?.message || 'Customer added successfully.'
+        );
         router.push('/dashboard');
       }
     } catch (error) {
@@ -94,10 +89,7 @@ export default function AddNewCustomerPage() {
         onSubmit(data);
         return;
       }
-      toast('Error', {
-        description:
-          'There was a problem adding the customer. Please try again.',
-      });
+      toast.error('There was a problem adding the customer. Please try again.');
     }
   };
 
@@ -105,17 +97,17 @@ export default function AddNewCustomerPage() {
     <div className="flex h-full w-full items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-[500px] space-y-5 rounded-xl border border-gray-500 p-10"
+        className="w-[500px] space-y-5 rounded-xl xs:border xs:p-5 md:p-10"
       >
         {customerFields.map((item, index) => (
           <div
             className={currentStep === index ? 'block' : 'hidden'}
             key={item.id}
           >
-            <h2 className="text-2xl font-semibold">{item.title}</h2>
-            <div className="space-y-5">
+            <h2 className="text-center text-2xl font-semibold">{item.title}</h2>
+            <div className=" ">
               {item.fields.map((field) => (
-                <div key={field.id} className="relative space-y-1">
+                <div key={field.id} className="relative mt-5 space-y-1">
                   <Label htmlFor={field.id}>{field.label}</Label>
 
                   {field.id !== 'profilePicture' ? (
@@ -146,7 +138,7 @@ export default function AddNewCustomerPage() {
           </div>
         ))}
         {currentStep === customerFields.length - 1 && (
-          <div className="relative mx-auto flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-2 p-0.5">
+          <div className="relative mx-auto mt-5 flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border-2 p-0.5">
             {!isImageUploading ? (
               <Image
                 src={profileUrl}
@@ -157,7 +149,7 @@ export default function AddNewCustomerPage() {
             ) : (
               <div className="flex items-center justify-center bg-black">
                 <Image
-                  src="/gif/loading.gif"
+                  src="/gif/picture-loading.gif"
                   alt="loading"
                   width={120}
                   height={120}
@@ -166,7 +158,19 @@ export default function AddNewCustomerPage() {
             )}
           </div>
         )}
-        <div className="mx-auto flex gap-x-5">
+
+        {currentStep === customerFields.length - 1 && (
+          <p
+            className={`mt-5 text-center text-sm text-[#ffa500] ${isImageUploading && 'animate-bounce'}`}
+          >
+            {isImageUploading
+              ? 'Uploading... Please wait for the preview.'
+              : !profileUrl.includes('res.cloudinary.com')
+                ? 'Profile picture is optional. You can submit without one.'
+                : 'Uploaded! Preview and submit.'}
+          </p>
+        )}
+        <div className="mx-auto mt-5 flex gap-x-5">
           {currentStep > 0 && (
             <Button
               type="button"
@@ -191,6 +195,15 @@ export default function AddNewCustomerPage() {
               className="grow"
               disabled={isSubmitting || isImageUploading}
             >
+              {isSubmitting && (
+                <Image
+                  src="/gif/loading.gif"
+                  alt="loading"
+                  width={20}
+                  height={20}
+                  className="bg-transparent"
+                />
+              )}
               Submit
             </Button>
           )}

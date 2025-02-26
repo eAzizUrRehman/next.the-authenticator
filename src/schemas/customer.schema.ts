@@ -26,17 +26,7 @@ export const customerSchema = z.object({
     .string()
     .min(1, 'ZIP is required')
     .max(10, 'ZIP must be less than 10 characters'),
-  profilePicture: z.any(),
+  profilePicture: z.any().optional(),
 });
 
 export type TCustomerSchema = z.infer<typeof customerSchema>;
-
-// .refine(
-//   (files) => {
-//     return ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type)
-//   },
-//   "Only .jpg, .jpeg, .png and .webp formats are supported."
-// )
-// .refine((files) => {
-//   return files?.[0]?.size <= MAX_FILE_SIZE;
-// }, `Max image size is 5MB.`)

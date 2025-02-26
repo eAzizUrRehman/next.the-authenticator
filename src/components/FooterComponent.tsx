@@ -1,15 +1,15 @@
 const FooterComponent = () => (
   <footer className="pt-2">
-    <p className="seminbold mx-auto w-fit text-sm">
-      Powered by{' '}
+    <p className="mx-auto w-fit animate-pulse text-center text-sm font-semibold">
+      developed with <span>&#128525;</span> by{' '}
       <a
-        href="https://azizurrehman.com/"
+        href="https://azizurrehman.com"
         target="_blank"
-        rel="noopener noreferrer"
-        className="text-[#ffa500] underline"
+        className="font-bold text-[#ffa500] underline underline-offset-4"
       >
         azizurrehman.com
-      </a>
+      </a>{' '}
+      !!
     </p>
   </footer>
 );

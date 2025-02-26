@@ -83,7 +83,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
             </>
           ) : (
             <TableRow>
-              <TableCell colSpan={headers.length} className="pt-5 text-center">
+              <TableCell colSpan={headers.length} className="py-5 text-center">
                 No data available
               </TableCell>
             </TableRow>

@@ -65,7 +65,7 @@ export const customerFields: TCustomerFields[] = [
       {
         id: 'zip',
         type: 'zip',
-        placeholder: '12345',
+        placeholder: '38734-2608',
         label: 'ZIP',
       },
     ],
