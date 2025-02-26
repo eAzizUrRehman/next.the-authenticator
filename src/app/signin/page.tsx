@@ -13,6 +13,7 @@ import axios, { AxiosError } from 'axios';
 import { signInSchema, TSignInSchema } from '@/schemas/signin.schema';
 import { signInFields } from '@/fields/signin.field';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export interface CustomErrorResponse {
   message: string;
@@ -38,15 +39,14 @@ export default function SignInPage() {
   };
 
   const onSubmit = async (data: TSignInSchema) => {
+    if (isSubmitting) return;
+
     try {
       const response = await axios.post('/api/user/signin', data);
 
-      toast('Success', {
-        description:
-          (response.data?.message as string) || 'User signed in successfully.',
-      });
-
-      // reset();
+      toast.success(
+        (response?.data?.message as string) || 'User signed in successfully.'
+      );
 
       router.push('/dashboard');
     } catch (error) {
@@ -56,11 +56,10 @@ export default function SignInPage() {
 
       console.error('Error response:', axiosError);
 
-      toast('Error', {
-        description:
-          (axiosError.response?.data?.message as string) ||
-          'There was a problem with your sign in. Please try again.',
-      });
+      toast.error(
+        (axiosError?.response?.data?.message as string) ||
+          'There was a problem with your sign in. Please try again.'
+      );
     }
   };
 
@@ -68,7 +67,7 @@ export default function SignInPage() {
     <div className="flex h-full w-full items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[500px] space-y-5 rounded-xl border border-gray-500 p-10"
+        className="w-[500px] space-y-5 rounded-xl xs:border xs:p-5 md:p-10"
       >
         {signInFields.map((field) => (
           <div key={field.id} className="relative space-y-1">
@@ -94,15 +93,26 @@ export default function SignInPage() {
             )}
           </div>
         ))}
-
         <div className="mx-auto w-fit">
           <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting && (
+              <Image
+                src="/gif/loading.gif"
+                alt="loading"
+                width={20}
+                height={20}
+                className="bg-transparent"
+              />
+            )}
             Sign In
           </Button>
         </div>
-        <p className="mx-auto w-fit text-sm">
+        <p className="mx-auto w-fit text-center text-sm">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="underline">
+          <Link
+            href="/signup"
+            className="block text-center underline underline-offset-4 xs:inline"
+          >
             Sign up here
           </Link>
         </p>

@@ -14,6 +14,7 @@ import { signUpSchema, TSignUpSchema } from '@/schemas/signup.schema';
 import { signUpFields } from '@/fields/signup.field';
 import Link from 'next/link';
 import { CustomErrorResponse } from '../signin/page';
+import Image from 'next/image';
 
 export default function SignUpPage() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -41,12 +42,12 @@ export default function SignUpPage() {
   };
 
   const onSubmit = async (data: TSignUpSchema) => {
+    if (isSubmitting) return;
+
     try {
       const response = await axios.post('/api/user/signup', data);
 
-      toast('Success', {
-        description: response.data.message || 'User registered successfully.',
-      });
+      toast.error(response?.data?.message || 'User registered successfully.');
 
       reset();
 
@@ -58,11 +59,10 @@ export default function SignUpPage() {
 
       console.error('Error response:', axiosError);
 
-      toast('Error', {
-        description:
-          axiosError.response?.data?.message ||
-          'There was a problem with your sign up. Please try again.',
-      });
+      toast.error(
+        axiosError?.response?.data?.message ||
+          'There was a problem with your sign up. Please try again.'
+      );
     }
   };
 
@@ -70,7 +70,7 @@ export default function SignUpPage() {
     <div className="flex h-full w-full items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-[500px] space-y-5 rounded-xl border border-gray-500 p-10"
+        className="w-[500px] space-y-5 rounded-xl xs:border xs:p-5 md:p-10"
       >
         {signUpFields.map((field) => (
           <div key={field.id} className="relative space-y-1">
@@ -107,12 +107,24 @@ export default function SignUpPage() {
 
         <div className="mx-auto w-fit">
           <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting && (
+              <Image
+                src="/gif/loading.gif"
+                alt="loading"
+                width={20}
+                height={20}
+                className="bg-transparent"
+              />
+            )}
             Sign Up
           </Button>
         </div>
-        <p className="mx-auto w-fit text-sm">
+        <p className="mx-auto w-fit text-center text-sm">
           Already have an account?{' '}
-          <Link href="/signin" className="underline">
+          <Link
+            href="/signin"
+            className="block text-center underline underline-offset-4 xs:inline"
+          >
             Sign in here
           </Link>
         </p>

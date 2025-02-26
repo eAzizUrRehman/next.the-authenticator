@@ -71,9 +71,9 @@ const DashboardPage = () => {
         data: { id },
       });
 
-      toast('Success', {
-        description: response.data.message || 'Customer deleted successfully.',
-      });
+      toast.success(
+        response?.data?.message || 'Customer deleted successfully.'
+      );
 
       await fetchData();
     } catch (error) {
